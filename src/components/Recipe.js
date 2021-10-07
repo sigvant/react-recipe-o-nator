@@ -10,8 +10,8 @@ function Recipe({title, calories, image, ingredients}) {
             <div>
                 <p>Ingredients</p>
                 <ol className={style.ing}>
-                    {ingredients.map(ingredient => (
-                        <li>{ingredient.text}</li>
+                    {ingredients.map((ingredient, index) => (
+                        <li key={index}>{ingredient.text}</li>
                     ))}
                 </ol>
             </div>

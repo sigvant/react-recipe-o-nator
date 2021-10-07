@@ -3,12 +3,11 @@ import { useEffect, useState } from 'react'
 import Recipe from './components/Recipe';
 require('dotenv').config();
 
-console.log(process.env)
-
 function App() {
 
-  const APP_ID = process.env.APP_ID
-  const APP_KEY = process.env.APP_KEY
+  // please use your own ID and key
+  const API_ID = process.env.REACT_APP_API_ID
+  const API_KEY = process.env.REACT_APP_API_KEY
   
   const [recipes, setRecipes] = useState([])
   const [search, setSearch] = useState('')
@@ -16,10 +15,9 @@ function App() {
   const [query, setQuery] = useState('banana')
 
   const exampleReq = 
-    `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`
+    `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${API_ID}&app_key=${API_KEY}`
 
   useEffect(() => {
-    console.log('Requesting API')
     getRecipes();
   }, [query])
 
@@ -27,7 +25,6 @@ function App() {
     try {
       const res = await fetch(exampleReq)
       const data = await res.json()
-      console.log(data.hits)
       setRecipes(data.hits);
     }
     catch (err) {
@@ -55,9 +52,9 @@ function App() {
       </form>
       <div className='recipes'>
         {
-          recipes.map(recipe => (
+          recipes.map((recipe, index) => (
             <Recipe
-              key={recipe.recipe.label}
+              key={index}
               title={recipe.recipe.label}
               calories={recipe.recipe.calories}
               image={recipe.recipe.image}
