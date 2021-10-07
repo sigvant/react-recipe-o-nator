@@ -50,6 +50,9 @@ function App() {
         <input className='search-bar' type="text" onChange={updateSearch} value={search}/>
         <button className='search-button' type='submit'>Submit</button>
       </form>
+      <div className='footer'>
+        <h6>Made By <a href="https://github.com/sigvant">Sigvant</a></h6>
+      </div>
       <div className='recipes'>
         {
           recipes.map((recipe, index) => (
@@ -63,6 +66,7 @@ function App() {
           ))
         }
       </div>
+      
     </div>
   );
 }
