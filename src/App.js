@@ -1,11 +1,13 @@
 import './App.css';
 import { useEffect, useState } from 'react'
 import Recipe from './components/Recipe';
+require('dotenv').config();
 
 function App() {
 
-  const APP_ID = '828487f2';
-  const APP_KEY = 'd7d265fa7e8260ac039933c781b4e42e'
+  // please use your own ID and key
+  const API_ID = process.env.REACT_APP_API_ID
+  const API_KEY = process.env.REACT_APP_API_KEY
   
   const [recipes, setRecipes] = useState([])
   const [search, setSearch] = useState('')
@@ -13,10 +15,9 @@ function App() {
   const [query, setQuery] = useState('banana')
 
   const exampleReq = 
-    `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`
+    `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${API_ID}&app_key=${API_KEY}`
 
   useEffect(() => {
-    console.log('Requesting API')
     getRecipes();
   }, [query])
 
@@ -24,7 +25,6 @@ function App() {
     try {
       const res = await fetch(exampleReq)
       const data = await res.json()
-      console.log(data.hits)
       setRecipes(data.hits);
     }
     catch (err) {
@@ -50,11 +50,14 @@ function App() {
         <input className='search-bar' type="text" onChange={updateSearch} value={search}/>
         <button className='search-button' type='submit'>Submit</button>
       </form>
+      <div className='footer'>
+        <h6>Made By <a href="https://github.com/sigvant">Sigvant</a></h6>
+      </div>
       <div className='recipes'>
         {
-          recipes.map(recipe => (
+          recipes.map((recipe, index) => (
             <Recipe
-              key={recipe.recipe.label}
+              key={index}
               title={recipe.recipe.label}
               calories={recipe.recipe.calories}
               image={recipe.recipe.image}
@@ -63,6 +66,7 @@ function App() {
           ))
         }
       </div>
+      
     </div>
   );
 }
